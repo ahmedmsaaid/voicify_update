@@ -21,8 +21,6 @@ class Library extends StatelessWidget {
   ) {
     var cubit = HomeCubit.get(context);
 
-    cubit.getList();
-
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(

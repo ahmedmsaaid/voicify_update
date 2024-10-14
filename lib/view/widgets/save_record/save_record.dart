@@ -271,7 +271,7 @@ class SaveRecord {
                             backgroundColor: AppColors.blue),
                         onPressed: () {
                           Navigator.pop(context);
-                          HomeCubit.get(context).navBar(2);
+                          HomeCubit.get(context).navBar(1);
                         },
                         child: Text(
                           LocaleKeys.viewLibrary.tr(),

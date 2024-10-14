@@ -57,11 +57,7 @@ class MyApp extends StatelessWidget {
               home: child,
             ));
       },
-      child: BlocProvider(
-          create: (BuildContext context) {
-            return HomeCubit();
-          },
-          child: const OnBoardingScreen()),
+      child: const OnBoardingScreen(),
     );
   }
 }

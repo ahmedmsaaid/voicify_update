@@ -38,6 +38,8 @@ dependencies:
   url_launcher: ^6.3.1
   get_it: ^8.0.0
   flutter_launcher_icons: ^0.14.1
+  curved_navigation_bar: ^1.0.6
+  animations: ^2.0.11
 
 dev_dependencies:
   flutter_test:
@@ -54,3 +56,4 @@ flutter:
     - assets/lotte_files/
     - assets/fonts/ar/
     - assets/
+    - assets/avatars/

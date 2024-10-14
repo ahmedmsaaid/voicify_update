@@ -1,15 +1,15 @@
 class UserModel {
   final String name;
   final String email;
-  final String password;
+  final String? icon;
 
-  UserModel({required this.name, required this.email, required this.password});
+  UserModel({required this.name, required this.email, this.icon});
 
   factory UserModel.fromJson(Map<String, dynamic> jsonData) {
     return UserModel(
       email: jsonData['email'],
       name: jsonData["name"],
-      password: jsonData["password"],
+      icon: jsonData["password"],
     );
   }
 
@@ -17,7 +17,7 @@ class UserModel {
     return {
       'name': name,
       'email': email,
-      'password': password,
+      'icon': icon,
     };
   }
 }

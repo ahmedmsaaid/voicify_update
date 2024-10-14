@@ -59,9 +59,10 @@ class Home extends StatelessWidget {
                   child: ListTile(
                     trailing: _popUoButton(),
                     leading: CircleAvatar(
-                      backgroundImage: Image.network(
-                              'https://img.freepik.com/free-vector/young-bearded-man_24877-82119.jpg')
-                          .image,
+                      radius: 30,
+                      backgroundImage:
+                          ImageIcon(AssetImage(HomeCubit.get(context).avatar))
+                              .image,
                     ),
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -250,7 +251,7 @@ Widget _container(context) {
     padding: EdgeInsets.all(8.0.r),
     child: InkWell(
       onTap: () {
-        HomeCubit.get(context).navBar(1);
+        HomeCubit.get(context).navBar(2);
       },
       child: Container(
         height: 50.h,

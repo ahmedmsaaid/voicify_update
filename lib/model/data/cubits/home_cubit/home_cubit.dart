@@ -5,6 +5,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:voicify/core/avatars/avatar_list.dart';
+import 'package:voicify/core/avatars/avatars.dart';
 import 'package:voicify/viewmodel/firebase/firebase.dart';
 import 'package:voicify/viewmodel/models/item_model/item_model.dart';
 
@@ -20,8 +22,17 @@ class HomeCubit extends Cubit<HomeState> {
 
   int currentIndex = 0;
   List<ItemModel> savedItems = [];
+  ScrollController scrollController = ScrollController();
+
   bool edit = false;
+  bool reverse = false;
   bool lang = false;
+  String avatar = SharedHelper.getData("avatar") == null
+      ? "assets/avatars/4.jpg"
+      : SharedHelper.getData("avatar");
+  int avatarIndex = SharedHelper.getData("avatarIndex") == null
+      ? 4
+      : SharedHelper.getData("avatar");
   String dropdownValue = SharedHelper.getData("lang") == null
       ? 'en'
       : SharedHelper.getData("lang");
@@ -150,13 +161,13 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> synceDataFireStore() async {
-    String key = await SharedHelper.getData(FirebaseKeys.userId);
+    String key = await SharedHelper.getData(FirebaseKeys.email);
     for (ItemModel item in savedItems) {
       try {
         await FirebaseFirestore.instance
             .collection(FirebaseKeys.users)
             .doc(key)
-            .collection("Data")
+            .collection("data")
             .doc(item.title)
             .set(item.toJson());
       } on Exception catch (e) {
@@ -167,7 +178,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<void> deleteOldDataFromFirestore() async {
-    String key = await SharedHelper.getData(FirebaseKeys.userId);
+    String key = await SharedHelper.getData(FirebaseKeys.email);
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection(FirebaseKeys.users)
         .doc(key)
@@ -186,7 +197,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<List<ItemModel>> fetchDataFromFirestore() async {
     List<ItemModel> items = [];
-    String key = await SharedHelper.getData(FirebaseKeys.userId);
+    String key = await SharedHelper.getData(FirebaseKeys.email);
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
         .collection(FirebaseKeys.users)
         .doc(key)
@@ -268,6 +279,14 @@ class HomeCubit extends Cubit<HomeState> {
       dropdownValue = selectedValue;
       emit(DrobDown());
     }
+  }
+
+  void changeAvatar(String index) {
+    avatar = "assets/avatars/$index.jpg";
+    SharedHelper.saveData("avatar", avatar);
+    avatarIndex = int.parse(index);
+    currentIndex = 4;
+    emit(Refrish());
   }
 
 // void refresh(int index) {

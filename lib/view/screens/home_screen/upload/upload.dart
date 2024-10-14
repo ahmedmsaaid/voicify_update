@@ -34,7 +34,7 @@ class Upload extends StatelessWidget {
               Center(
                 child: InkWell(
                   onTap: () {
-                    print(SharedHelper.getData(FirebaseKeys.userId));
+                    print(SharedHelper.getData(FirebaseKeys.email));
                   },
                   child: Container(
                     width: 320.w,

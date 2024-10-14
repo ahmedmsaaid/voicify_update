@@ -149,18 +149,11 @@ Widget texts(BuildContext context) {
                           borderRadius: BorderRadius.circular(12.r)),
                       backgroundColor: Colors.deepPurpleAccent),
                   onPressed: () async {
-                    if (SharedHelper.getData(FirebaseKeys.userId) != null) {
-                      Future.delayed(Duration(seconds: 3));
-                      await AuthCubit.get(context).getUserFireStore(
-                          SharedHelper.getData(FirebaseKeys.userId));
-                      print("///////////////////////////////");
-                      print(SharedHelper.getData(FirebaseKeys.userId));
-                    }
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              SharedHelper.getData(FirebaseKeys.userId) == null
+                              SharedHelper.getData(FirebaseKeys.email) == null
                                   ? SignInScreen()
                                   : HomeScreen(),
                         ));

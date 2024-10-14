@@ -5,8 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:voicify/core/translation/locate_keys.g.dart';
 import 'package:voicify/model/data/cubits/auth_cubit/auth_cubit.dart';
 import 'package:voicify/model/data/cubits/home_cubit/home_cubit.dart';
+import 'package:voicify/view/widgets/avatar/avatar.dart';
 import 'package:voicify/viewmodel/models/colors/app_colors.dart';
 
+import '../../../../core/avatars/avatar_list.dart';
 import '../../../../model/data/cache/cache_helper.dart';
 import '../../../../viewmodel/firebase/firebase.dart';
 import '../../on_boarding/on_boarding.dart';
@@ -51,14 +53,21 @@ class Settings extends StatelessWidget {
               CircleAvatar(
                 radius: 65,
                 backgroundColor: AppColors.blue,
-                child: CircleAvatar(
-                  radius: 60,
-                  child: ClipOval(
-                    child: Image.network(
-                      'https://img.freepik.com/free-vector/young-bearded-man_24877-82119.jpg',
-                      width: 100.0,
-                      height: 100.0,
-                      fit: BoxFit.cover, // هنا يمكنك استخدام fit المناسب
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(60),
+                  onTap: () {
+                    ChangeAvatar.change(
+                        HomeCubit.get(context).scrollController, context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: SizedBox(
+                      child: CircleAvatar(
+                        radius: 65,
+                        backgroundImage:
+                            ImageIcon(AssetImage(HomeCubit.get(context).avatar))
+                                .image,
+                      ),
                     ),
                   ),
                 ),

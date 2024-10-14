@@ -26,14 +26,9 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController name = TextEditingController();
   late UserModel user;
 
-  void saveUserId(userCredential) {
-    SharedHelper.saveData(FirebaseKeys.userId, userCredential.user!.uid);
-  }
-
-  void saveUserData() {
-    SharedHelper.saveData(FirebaseKeys.name, user.name);
-    SharedHelper.saveData(FirebaseKeys.email, user.email);
-    SharedHelper.saveData(FirebaseKeys.password, user.password);
+  Future<void> saveUserData(UserModel user) async {
+    await SharedHelper.saveData(FirebaseKeys.name, user.name);
+    await SharedHelper.saveData(FirebaseKeys.email, user.email);
   }
 
   Future<void> signIn() async {
@@ -41,8 +36,12 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email.text, password: password.text);
-      await getUserFireStore(userCredential.user!.uid);
-      saveUserId(userCredential);
+      await getUserFireStore(userCredential.user!.email!);
+      UserModel user = UserModel(
+        name: userCredential.user!.displayName!,
+        email: userCredential.user!.email!,
+      );
+      saveUserData(user);
       emit(SuccessSignIn());
     } on FirebaseAuthException catch (e) {
       print('*********$e.code');
@@ -77,8 +76,8 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email.text, password: password.text);
-      await addUserFireStore(userCredential.user!.uid, false);
-      saveUserId(userCredential);
+      await addUserFireStore(userCredential.user!.email!, false);
+
       emit(SuccessSignUp());
     } on Exception catch (e) {
       if (e is PlatformException) {
@@ -97,7 +96,7 @@ class AuthCubit extends Cubit<AuthState> {
     emit(LoadingSignOut());
     try {
       auth.signOut();
-      SharedHelper.remove(FirebaseKeys.userId);
+      SharedHelper.remove(FirebaseKeys.email);
       emit(SuccessSignOut());
     } on FirebaseException catch (e) {
       emit(FailedSignOut(err: e.toString()));
@@ -127,8 +126,10 @@ class AuthCubit extends Cubit<AuthState> {
           await FirebaseAuth.instance.signInWithCredential(credential);
       print("SuccessSignUpWithGoogle");
       await checkIfUserFound(userCredential);
-
-      saveUserId(userCredential);
+      UserModel user = UserModel(
+          name: userCredential.user!.displayName!,
+          email: userCredential.user!.email!);
+      saveUserData(user);
       emit(SuccessSignUpWithGoogle());
       print("SuccessSignUpWithGoogle");
       return userCredential.user;
@@ -142,19 +143,19 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> checkIfUserFound(UserCredential userCredential) async {
     DocumentSnapshot user = await fireStore
         .collection(FirebaseKeys.users)
-        .doc(userCredential.user!.uid)
+        .doc(userCredential.user!.email)
         .get();
     if (user.exists) {
-      getUserFireStore(userCredential.user!.uid);
+      getUserFireStore(userCredential.user!.email!);
     } else {
       await addUserFireStore(
-        userCredential.user!.uid,
+        userCredential.user!.email!,
         true,
         googleEmail: userCredential.user!.email ?? '',
         googleName: userCredential.user!.displayName ?? '',
       );
     }
-    getUserFireStore(userCredential.user!.uid);
+    getUserFireStore(userCredential.user!.email!);
   }
 
   Future<void> addUserFireStore(String userId, bool google,
@@ -166,10 +167,10 @@ class AuthCubit extends Cubit<AuthState> {
         FirebaseKeys.email: google ? googleEmail : email.text,
       });
       user = UserModel(
-          name: google ? googleName : name.text,
-          email: google ? googleEmail : email.text,
-          password: password.text);
-      saveUserData();
+        name: google ? googleName : name.text,
+        email: google ? googleEmail : email.text,
+      );
+      saveUserData(user);
       emit(SuccessAddUserFireStore());
     } on FirebaseException catch (e) {
       emit(FailedAddUserFireStore(err: e.toString()));
@@ -177,17 +178,17 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<void> getUserFireStore(String userId) async {
+  Future<void> getUserFireStore(String email) async {
     emit(LoadingGetUserFireStore());
     try {
       DocumentSnapshot data =
-          await fireStore.collection(FirebaseKeys.users).doc(userId).get();
+          await fireStore.collection(FirebaseKeys.users).doc(email).get();
       try {
-        user = UserModel(
-            name: data['name'], email: data['email'], password: 'password');
-        saveUserData();
+        user =
+            UserModel(name: data['name'], email: data['email'], icon: 'icon');
+        saveUserData(user);
         print(user.name);
-        print(SharedHelper.getData(FirebaseKeys.userId));
+        print(SharedHelper.getData(FirebaseKeys.email));
       } on Exception catch (e) {
         print("/*****************************");
         print("${e.toString()}");
