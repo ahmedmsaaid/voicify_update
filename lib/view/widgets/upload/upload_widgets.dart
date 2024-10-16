@@ -9,7 +9,6 @@ import 'package:voicify/model/data/cubits/api_cubit/api_cubit.dart';
 import 'package:voicify/model/data/cubits/home_cubit/home_cubit.dart';
 import 'package:voicify/viewmodel/models/colors/app_colors.dart';
 
-import '../../../model/data/cubits/data_cubit/data_cubit.dart';
 import '../save_record/save_record.dart';
 import '../snack_bar/snack_bar.dart';
 
@@ -303,15 +302,15 @@ class UploadWidgets {
                                 ),
                                 !cubit.edit
                                     ? SizedBox(height: 10.h)
-                                    : SizedBox(),
+                                    : const SizedBox(),
                                 !cubit.edit
-                                    ? Divider(
+                                    ? const Divider(
                                         color: Colors.grey,
                                         thickness: 1,
                                         endIndent: 40,
                                         indent: 40,
                                       )
-                                    : SizedBox(),
+                                    : const SizedBox(),
                                 Expanded(
                                   child: cubit.edit
                                       ? Padding(
@@ -374,7 +373,7 @@ class UploadWidgets {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(12),
+                                      padding: const EdgeInsets.all(12),
                                       decoration: BoxDecoration(
                                         color: Colors.indigo,
                                         borderRadius: BorderRadius.circular(12),
@@ -394,13 +393,13 @@ class UploadWidgets {
                                               SaveRecord.done(context);
                                             });
                                           },
-                                          icon: Icon(Icons.save,
+                                          icon: const Icon(Icons.save,
                                               color: Colors.white)),
                                     ),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                     Text(
                                       LocaleKeys.save.tr(),
-                                      style: TextStyle(color: Colors.grey),
+                                      style: const TextStyle(color: Colors.grey),
                                     ),
                                   ],
                                 ),
@@ -408,7 +407,7 @@ class UploadWidgets {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(12),
+                                      padding: const EdgeInsets.all(12),
                                       decoration: BoxDecoration(
                                         color: Colors.deepPurpleAccent,
                                         borderRadius: BorderRadius.circular(12),
@@ -418,13 +417,13 @@ class UploadWidgets {
                                           onPressed: () {
                                             cubit.editButton();
                                           },
-                                          icon: Icon(Icons.edit,
+                                          icon: const Icon(Icons.edit,
                                               color: Colors.white)),
                                     ),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                     Text(
                                       LocaleKeys.edit.tr(),
-                                      style: TextStyle(color: Colors.grey),
+                                      style: const TextStyle(color: Colors.grey),
                                     ),
                                   ],
                                 ),
@@ -432,7 +431,7 @@ class UploadWidgets {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(12),
+                                      padding: const EdgeInsets.all(12),
                                       decoration: BoxDecoration(
                                         color: Colors.blueGrey,
                                         borderRadius: BorderRadius.circular(12),
@@ -457,13 +456,13 @@ class UploadWidgets {
                                               );
                                             });
                                           },
-                                          icon: Icon(Icons.copy,
+                                          icon: const Icon(Icons.copy,
                                               color: Colors.white)),
                                     ),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                     Text(
                                       LocaleKeys.copy.tr(),
-                                      style: TextStyle(color: Colors.grey),
+                                      style: const TextStyle(color: Colors.grey),
                                     ),
                                   ],
                                 ),

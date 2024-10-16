@@ -19,7 +19,8 @@ class Library extends StatelessWidget {
   Widget build(
     BuildContext context,
   ) {
-    var cubit = HomeCubit.get(context);
+    HomeCubit.get(context).getList();
+    List<ItemModel> savedItems = HomeCubit.get(context).savedItems;
 
     return Container(
       decoration: const BoxDecoration(
@@ -49,52 +50,47 @@ class Library extends StatelessWidget {
         ),
         body: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
-            return cubit.savedItems.isEmpty
+            return savedItems.isEmpty
                 ? Center(
                     child: Lottie.asset('assets/lotte_files/empty.json',
                         repeat: false),
                   )
                 : CustomScrollView(
                     slivers: [
-                      BlocBuilder<HomeCubit, HomeState>(
-                        builder: (context, state) {
-                          cubit.savedItems;
-                          return SliverAppBar(
-                            backgroundColor: Colors.transparent,
-                            automaticallyImplyLeading: false,
-                            expandedHeight: 120.0.h,
-                            floating: false,
-                            flexibleSpace: FlexibleSpaceBar(
-                              background: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0.r),
-                                    child: Text(
-                                      LocaleKeys.recent.tr(),
-                                      style: TextStyle(
-                                          fontSize: 22, color: Colors.white),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: ListView.separated(
-                                      itemBuilder: (context, index) {
-                                        return _item(
-                                            index: cubit.savedItems.length - 1,
-                                            context: context,
-                                            model: cubit.savedItems.last);
-                                      },
-                                      itemCount: 1,
-                                      separatorBuilder: (context, index) =>
-                                          SizedBox(height: 10.h),
-                                    ),
-                                  ),
-                                ],
+                      SliverAppBar(
+                        backgroundColor: Colors.transparent,
+                        automaticallyImplyLeading: false,
+                        expandedHeight: 120.0.h,
+                        floating: false,
+                        flexibleSpace: FlexibleSpaceBar(
+                          background: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(8.0.r),
+                                child: Text(
+                                  LocaleKeys.recent.tr(),
+                                  style: const TextStyle(
+                                      fontSize: 22, color: Colors.white),
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                              Expanded(
+                                child: ListView.separated(
+                                  itemBuilder: (context, index) {
+                                    return _item(
+                                        index: savedItems.length - 1,
+                                        context: context,
+                                        model: savedItems.last);
+                                  },
+                                  itemCount: 1,
+                                  separatorBuilder: (context, index) =>
+                                      SizedBox(height: 10.h),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                       SliverToBoxAdapter(
                         child: Padding(
@@ -111,10 +107,10 @@ class Library extends StatelessWidget {
                           (context, index) {
                             return _item(
                                 context: context,
-                                model: cubit.savedItems[index],
+                                model: savedItems[index],
                                 index: index);
                           },
-                          childCount: cubit.savedItems.length,
+                          childCount: savedItems.length,
                         ),
                       ),
                     ],

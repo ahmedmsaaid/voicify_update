@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:meta/meta.dart';
 import 'package:voicify/model/data/cache/cache_helper.dart';
 import 'package:voicify/viewmodel/firebase/firebase.dart';
 import 'package:voicify/viewmodel/models/user/user_model.dart';
@@ -18,6 +16,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   static AuthCubit get(context) => BlocProvider.of<AuthCubit>(context);
   FirebaseAuth auth = FirebaseAuth.instance;
+
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -32,16 +31,14 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> signIn() async {
+    final user = FirebaseAuth.instance.currentUser?.uid;
+
     emit(LoadingSignIn());
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      UserCredential? userCredential = await auth.signInWithEmailAndPassword(
           email: email.text, password: password.text);
-      await getUserFireStore(userCredential.user!.email!);
-      UserModel user = UserModel(
-        name: userCredential.user!.displayName!,
-        email: userCredential.user!.email!,
-      );
-      saveUserData(user);
+      await getUserFireStore(email.text);
+
       emit(SuccessSignIn());
     } on FirebaseAuthException catch (e) {
       print('*********$e.code');
@@ -191,14 +188,14 @@ class AuthCubit extends Cubit<AuthState> {
         print(SharedHelper.getData(FirebaseKeys.email));
       } on Exception catch (e) {
         print("/*****************************");
-        print("${e.toString()}");
+        print(e.toString());
       }
 
       emit(SuccessGetUserFireStore());
     } on Exception catch (e) {
       emit(FailedGetUserFireStore(err: e.toString()));
       print("/*****************************");
-      print("${e.toString()}");
+      print(e.toString());
     }
   }
 
@@ -210,6 +207,47 @@ class AuthCubit extends Cubit<AuthState> {
     } on Exception catch (e) {
       emit(FailedSendLink(err: e.toString()));
       print("************${e.toString()}");
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    try {
+      // الحصول على المستخدم الحالي
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        // حذف بيانات المستخدم من Firestore
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .delete();
+
+        // حذف أي مجموعات فرعية أو وثائق مرتبطة بالمستخدم
+        // مثال: حذف المهام الخاصة بالمستخدم
+        await FirebaseFirestore.instance
+            .collection('tasks')
+            .where('userId', isEqualTo: user.uid)
+            .get()
+            .then((snapshot) {
+          for (DocumentSnapshot doc in snapshot.docs) {
+            doc.reference.delete();
+          }
+        });
+
+        // حذف الحساب من Firebase Authentication
+        await user.delete();
+
+        // تسجيل الخروج بعد حذف الحساب
+        await FirebaseAuth.instance.signOut();
+
+        print('تم حذف الحساب بنجاح');
+      } else {
+        print('لم يتم العثور على مستخدم مسجل الدخول');
+      }
+    } catch (e) {
+      print('حدث خطأ أثناء حذف الحساب: $e');
+      // يمكنك هنا إعادة رمي الخطأ أو التعامل معه بطريقة أخرى
+      rethrow;
     }
   }
 

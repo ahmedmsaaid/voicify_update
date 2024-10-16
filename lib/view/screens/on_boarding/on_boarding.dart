@@ -12,8 +12,6 @@ import 'package:voicify/view/screens/home_screen/home_screen.dart';
 import 'package:voicify/view/screens/signIn_screen/signIn_screen.dart';
 import 'package:voicify/viewmodel/firebase/firebase.dart';
 
-import '../signup_screen/signUp_screen.dart';
-
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
 
@@ -45,7 +43,7 @@ class OnBoardingScreen extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     width: double.infinity,
                     height: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       // borderRadius: BorderRadius.only(
                       //     topLeft: Radius.circular(100.r),
                       //     topRight: Radius.circular(100.r)),
@@ -154,8 +152,8 @@ Widget texts(BuildContext context) {
                         MaterialPageRoute(
                           builder: (context) =>
                               SharedHelper.getData(FirebaseKeys.email) == null
-                                  ? SignInScreen()
-                                  : HomeScreen(),
+                                  ? const SignInScreen()
+                                  : const HomeScreen(),
                         ));
                   },
                   child: Row(

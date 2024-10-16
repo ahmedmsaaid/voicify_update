@@ -7,7 +7,7 @@ import Foundation
 
 import cloud_firestore
 import facebook_auth_desktop
-import ffmpeg_kit_flutter_audio
+import ffmpeg_kit_flutter
 import firebase_auth
 import firebase_core
 import flutter_secure_storage_macos

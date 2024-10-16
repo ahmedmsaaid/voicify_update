@@ -2,13 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/link.dart';
 import 'package:voicify/core/translation/locate_keys.g.dart';
 import 'package:voicify/model/data/cubits/auth_cubit/auth_cubit.dart';
 import 'package:voicify/model/data/cubits/home_cubit/home_cubit.dart';
 import 'package:voicify/view/widgets/avatar/avatar.dart';
 import 'package:voicify/viewmodel/models/colors/app_colors.dart';
 
-import '../../../../core/avatars/avatar_list.dart';
 import '../../../../model/data/cache/cache_helper.dart';
 import '../../../../viewmodel/firebase/firebase.dart';
 import '../../on_boarding/on_boarding.dart';
@@ -41,7 +41,7 @@ class Settings extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => OnBoardingScreen(),
+                    builder: (context) => const OnBoardingScreen(),
                   ));
             }
           },
@@ -80,7 +80,7 @@ class Settings extends StatelessWidget {
                       SharedHelper.getData(
                         FirebaseKeys.name,
                       ),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ],
                 ),
@@ -92,12 +92,12 @@ class Settings extends StatelessWidget {
                 child: Column(
                   children: [
                     item(
-                      Icon(Icons.arrow_forward_ios_outlined),
+                      const Icon(Icons.arrow_forward_ios_outlined),
                       SharedHelper.getData(FirebaseKeys.name),
                       LocaleKeys.name.tr(),
                     ),
                     item(
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_ios_outlined,
                         size: 15,
                       ),
@@ -124,7 +124,7 @@ class Settings extends StatelessWidget {
                         value: HomeCubit.get(context).dropdownValue,
                         // تحديد القيمة الحالية هنا
 
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                         items: [
@@ -132,7 +132,7 @@ class Settings extends StatelessWidget {
                             value: "ar",
                             child: Text(
                               LocaleKeys.arabic.tr(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                             ),
@@ -141,7 +141,7 @@ class Settings extends StatelessWidget {
                             value: "en",
                             child: Text(
                               LocaleKeys.english.tr(),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                               ),
                             ), // تصحيح اسم اللغة
@@ -166,6 +166,17 @@ class Settings extends StatelessWidget {
                   ],
                 ),
               ),
+              Link(
+                  target: LinkTarget.defaultTarget,
+                  uri: Uri.parse("https://voicify-app.blogspot.com/"),
+                  builder: (context, followLink) => TextButton(
+                      onPressed: followLink,
+                      child: const Row(
+                        children: [
+                          Text("Delete Account "),
+                          Icon(Icons.open_in_new_outlined)
+                        ],
+                      ))),
               SizedBox(
                 height: 50.h,
               ),
@@ -182,23 +193,24 @@ class Settings extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                       side: BorderSide(color: Colors.grey, width: 1.w),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 15),
                     backgroundColor:
                         AppColors.purple.withOpacity(.3), // Button color
                   ),
-                  child: Container(
+                  child: SizedBox(
                     width: 150.w,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
                           LocaleKeys.signOut.tr(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
                         ),
-                        Icon(
+                        const Icon(
                           size: 25,
                           Icons.logout,
                           color: Colors.red,
@@ -231,7 +243,7 @@ Widget item(Widget icon, String title, String name) {
         title: Center(
           child: Text(
             title,
-            style: TextStyle(color: Colors.grey, fontSize: 14),
+            style: const TextStyle(color: Colors.grey, fontSize: 14),
           ),
         ),
         leading: Text(

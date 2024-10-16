@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:voicify/core/avatars/avatar_list.dart';
-import 'package:voicify/core/avatars/avatars.dart';
 import 'package:voicify/viewmodel/firebase/firebase.dart';
 import 'package:voicify/viewmodel/models/item_model/item_model.dart';
 
@@ -27,18 +26,12 @@ class HomeCubit extends Cubit<HomeState> {
   bool edit = false;
   bool reverse = false;
   bool lang = false;
-  String avatar = SharedHelper.getData("avatar") == null
-      ? "assets/avatars/4.jpg"
-      : SharedHelper.getData("avatar");
+  String avatar = SharedHelper.getData("avatar") ?? "assets/avatars/4.jpg";
   int avatarIndex = SharedHelper.getData("avatarIndex") == null
       ? 4
       : SharedHelper.getData("avatar");
-  String dropdownValue = SharedHelper.getData("lang") == null
-      ? 'en'
-      : SharedHelper.getData("lang");
-  bool sync = SharedHelper.getData("sync") == null
-      ? false
-      : SharedHelper.getData("sync");
+  String dropdownValue = SharedHelper.getData("lang") ?? 'en';
+  bool sync = SharedHelper.getData("sync") ?? false;
   List<ItemModel> items = [];
 
   // int listItems = 1;
@@ -230,7 +223,7 @@ class HomeCubit extends Cubit<HomeState> {
   // }
 
   Future<void> getList() async {
-    print("getList");
+    debugPrint("getList");
     String key = await SharedHelper.getData(FirebaseKeys.email);
     var data = await SharedHelper.getData(key); // احصل على البيانات
 
@@ -241,21 +234,19 @@ class HomeCubit extends Cubit<HomeState> {
         List<String> itemsList =
             (data is List<String>) ? data : List<String>.from(data);
 
-        if (itemsList.isNotEmpty) {
+        if (itemsList.isNotEmpty || itemsList.length != savedItems.length) {
           savedItems = itemsList
               .map((item) => ItemModel.fromJson(json.decode(item)))
               .toList();
         }
         if (sync) {
           synceDataFireStore();
+          savedItems = await fetchDataFromFirestore();
         }
         emit(GetData());
       } catch (e) {
-        debugPrint('*******************error $e');
+        debugPrint('*******************error ${e.toString()}');
       }
-    }
-    if (sync) {
-      savedItems = await fetchDataFromFirestore();
     }
   }
 
@@ -285,6 +276,7 @@ class HomeCubit extends Cubit<HomeState> {
     avatar = "assets/avatars/$index.jpg";
     SharedHelper.saveData("avatar", avatar);
     avatarIndex = int.parse(index);
+    avatars[avatarIndex].isSelected = true;
     currentIndex = 4;
     emit(Refrish());
   }

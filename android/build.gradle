@@ -1,3 +1,16 @@
+buildscript {
+    ext.kotlin_version = '1.8.0' // تأكد من استخدام أحدث إصدار مستقر من Kotlin
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0' // استخدم أحدث إصدار متوافق من أدوات البناء
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // تعيين النسخة المستخدمة من Kotlin
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -5,14 +18,12 @@ allprojects {
     }
 }
 
-rootProject.buildDir = "../build"
+rootProject.buildDir = '../build' // تحديد الدليل الجذر لبناء المشروع
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
-    project.evaluationDependsOn(":app")
+    project.buildDir = "${rootProject.buildDir}/${project.name}" // تعيين الدليل الفرعي
+    project.evaluationDependsOn(':app') // ضمان تقييم المشروع الأساسي
 }
 
 tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+    delete rootProject.buildDir // مهمة تنظيف المشروع
 }

@@ -1,7 +1,7 @@
 class FirebaseKeys {
-  static final String users = "users";
+  static const String users = "users";
 
-  static final String name = "name";
-  static final String email = "email";
-  static final String password = "password";
+  static const String name = "name";
+  static const String email = "email";
+  static const String password = "password";
 }

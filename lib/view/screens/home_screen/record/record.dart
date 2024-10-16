@@ -36,7 +36,7 @@ class Record extends StatelessWidget {
                 title: Center(
                     child: Text(
                   LocaleKeys.inputSpeech.tr(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 22,
                   ),
@@ -178,7 +178,7 @@ Widget _mic(context) {
               gradient: LinearGradient(
                 colors: [
                   AppColors.blue, // أسود رمادي
-                  Color(0xFF6a1b9a), // لون أرجواني داكن
+                  const Color(0xFF6a1b9a), // لون أرجواني داكن
                 ],
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
@@ -229,7 +229,7 @@ Widget _mic(context) {
               gradient: LinearGradient(
                 colors: [
                   AppColors.blue, // أسود رمادي
-                  Color(0xFF6a1b9a), // لون أرجواني داكن
+                  const Color(0xFF6a1b9a), // لون أرجواني داكن
                 ],
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
@@ -275,7 +275,7 @@ Widget _buttons(context) {
                 children: [
                   Text(
                     LocaleKeys.go.tr(),
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   SizedBox(
                     width: 15.w,
@@ -307,7 +307,7 @@ Widget _buttons(context) {
                 children: [
                   Text(
                     LocaleKeys.lang.tr(),
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                   const Expanded(
                     child: SizedBox(),

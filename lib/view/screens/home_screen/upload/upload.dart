@@ -18,7 +18,7 @@ class Upload extends StatelessWidget {
     return BlocBuilder<ApiCubit, ApiState>(
       builder: (context, state) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Colors.black, // أسود رمادي
@@ -40,7 +40,7 @@ class Upload extends StatelessWidget {
                     width: 320.w,
                     height: 200.h,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         colors: [
                           Colors.blueGrey, // أسود رمادي
                           Color(0xFF6a1b9a), // لون أرجواني داكن
@@ -76,10 +76,14 @@ class Upload extends StatelessWidget {
                                     Future.delayed(const Duration(seconds: 5))
                                         .then((_) async {
                                       Navigator.pop(context);
-
-                                      UploadWidgets.pickFile(
-                                        context,
-                                      );
+                                      if (ApiCubit.get(context)
+                                          .titleController
+                                          .text
+                                          .isNotEmpty) {
+                                        UploadWidgets.pickFile(
+                                          context,
+                                        );
+                                      }
 
                                       ApiCubit.get(context).content = "";
                                     });
@@ -88,7 +92,7 @@ class Upload extends StatelessWidget {
                                   child: Container(
                                     padding: EdgeInsets.all(8.r),
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
+                                      gradient: const LinearGradient(
                                         colors: [
                                           Colors.black, // أسود رمادي
                                           Color(0xFF6a1b9a), // لون أرجواني داكن
@@ -101,7 +105,7 @@ class Upload extends StatelessWidget {
                                           color: Colors.black.withOpacity(0.5),
                                           spreadRadius: 5,
                                           blurRadius: 7,
-                                          offset: Offset(0,
+                                          offset: const Offset(0,
                                               3), // changes position of shadow
                                         ),
                                       ],
@@ -116,7 +120,7 @@ class Upload extends StatelessWidget {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           ImageIcon(
-                                            AssetImage(
+                                            const AssetImage(
                                                 "assets/icons/music.png"),
                                             size: 40.r,
                                             color: Colors.white,
@@ -152,7 +156,7 @@ class Upload extends StatelessWidget {
                                           .titleController
                                           .text
                                           .isNotEmpty) {
-                                        UploadWidgets.pickFile(
+                                        await UploadWidgets.pickFile(
                                           context,
                                         );
                                       }
@@ -162,9 +166,9 @@ class Upload extends StatelessWidget {
                                     // UploadWidgets.upload(context, state);
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(8),
                                     decoration: BoxDecoration(
-                                      gradient: LinearGradient(
+                                      gradient: const LinearGradient(
                                         colors: [
                                           Colors.black, // أسود رمادي
                                           Color(0xFF6a1b9a), // لون أرجواني داكن
@@ -178,7 +182,7 @@ class Upload extends StatelessWidget {
                                           color: Colors.black.withOpacity(0.5),
                                           spreadRadius: 5,
                                           blurRadius: 7,
-                                          offset: Offset(0,
+                                          offset: const Offset(0,
                                               3), // changes position of shadow
                                         ),
                                       ],
@@ -192,7 +196,7 @@ class Upload extends StatelessWidget {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           ImageIcon(
-                                            AssetImage(
+                                            const AssetImage(
                                                 "assets/icons/video.png"),
                                             size: 40.r,
                                             color: Colors.white,
@@ -221,7 +225,7 @@ class Upload extends StatelessWidget {
                         SizedBox(height: 10.h),
                         Text(
                           LocaleKeys.uploadDescriptionAudio.tr(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white70,

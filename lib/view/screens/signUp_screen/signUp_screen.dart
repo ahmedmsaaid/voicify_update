@@ -33,15 +33,14 @@ class SignupScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: Center(
           child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: BlocConsumer<AuthCubit, AuthState>(
               listener: (context, state) {
-                if (state is SuccessSignIn ||
-                    state is SuccessSignUpWithGoogle) {
-                  Navigator.push(
+                if (state is SuccessSignUpWithGoogle) {
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => HomeScreen(),
+                        builder: (context) => const HomeScreen(),
                       ));
                 } else if (state is FailedSignIn) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -56,6 +55,12 @@ class SignupScreen extends StatelessWidget {
                     ),
                   );
                 } else if (state is SuccessSignUp) {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignInScreen(),
+                      ));
+                  AuthCubit.get(context).clear();
                   Alert.done(context, LocaleKeys.done.tr());
                 }
               },
@@ -69,41 +74,41 @@ class SignupScreen extends StatelessWidget {
                       Image(image: Image.asset("assets/images/mic2.png").image),
                       Text(
                         LocaleKeys.signUp.tr(),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 40),
+                      const SizedBox(height: 40),
                       TextField(
                         controller: cubit.name,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.transparent,
                           hintText: LocaleKeys.name.tr(),
-                          border: UnderlineInputBorder(
+                          border: const UnderlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.white), // للحد الصريح
                           ),
-                          prefixIcon: Icon(Icons.email),
+                          prefixIcon: const Icon(Icons.email),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextField(
                         controller: cubit.email,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.transparent,
                           hintText: LocaleKeys.email.tr(),
-                          border: UnderlineInputBorder(
+                          border: const UnderlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.white), // للحد الصريح
                           ),
-                          prefixIcon: Icon(Icons.email),
+                          prefixIcon: const Icon(Icons.email),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextField(
                         controller: cubit.password,
                         obscureText: true,
@@ -111,20 +116,20 @@ class SignupScreen extends StatelessWidget {
                           filled: true,
                           fillColor: Colors.transparent,
                           hintText: LocaleKeys.password.tr(),
-                          border: UnderlineInputBorder(
+                          border: const UnderlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.white), // للحد الصريح
                           ),
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(LocaleKeys.lang.tr()),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           DropdownButton<String>(
@@ -146,7 +151,7 @@ class SignupScreen extends StatelessWidget {
                             value: HomeCubit.get(context).dropdownValue,
                             // تحديد القيمة الحالية هنا
 
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                             ),
                             items: [
@@ -154,7 +159,7 @@ class SignupScreen extends StatelessWidget {
                                 value: "ar",
                                 child: Text(
                                   LocaleKeys.arabic.tr(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                   ),
                                 ),
@@ -163,14 +168,14 @@ class SignupScreen extends StatelessWidget {
                                 value: "en",
                                 child: Text(
                                   LocaleKeys.english.tr(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                   ),
                                 ), // تصحيح اسم اللغة
                               ),
                             ],
                           ),
-                          Expanded(child: SizedBox()),
+                          const Expanded(child: SizedBox()),
                         ],
                       ),
                       SizedBox(height: 40.h),
@@ -184,21 +189,22 @@ class SignupScreen extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(color: Colors.grey, width: 2),
+                            side:
+                                const BorderSide(color: Colors.grey, width: 2),
                           ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 15),
                           backgroundColor:
                               AppColors.purple.withOpacity(.3), // Button color
                         ),
                         child: state is LoadingSignUp
-                            ? Center(
+                            ? const Center(
                                 child: CircularProgressIndicator.adaptive(),
                               )
                             : Text(
                                 LocaleKeys.signUp.tr(),
-                                style:
-                                    TextStyle(fontSize: 18, color: Colors.grey),
+                                style: const TextStyle(
+                                    fontSize: 18, color: Colors.grey),
                               ),
                       ),
                       SizedBox(height: 10.h),
@@ -214,7 +220,7 @@ class SignupScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30),
                             side: BorderSide(color: Colors.grey, width: 2.w),
                           ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 15),
                           backgroundColor:
                               AppColors.purple.withOpacity(.3), // Button color
@@ -231,10 +237,10 @@ class SignupScreen extends StatelessWidget {
                             ),
                             Text(
                               LocaleKeys.sigUpnGoogle.tr(),
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.white),
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.white),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                           ],
@@ -244,7 +250,7 @@ class SignupScreen extends StatelessWidget {
                         children: [
                           Text(
                             LocaleKeys.alreadyHaveAccount.tr(),
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                           SizedBox(
                             width: 20.w,
@@ -254,12 +260,12 @@ class SignupScreen extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => SignInScreen(),
+                                    builder: (context) => const SignInScreen(),
                                   ));
                             },
                             child: Text(
                               LocaleKeys.signIn.tr(),
-                              style: TextStyle(color: Colors.blueAccent),
+                              style: const TextStyle(color: Colors.blueAccent),
                             ),
                           ),
                         ],

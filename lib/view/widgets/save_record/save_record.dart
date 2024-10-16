@@ -30,7 +30,7 @@ class SaveRecord {
                       child: Center(
                         child: Text(
                           LocaleKeys.recordVoiceFirst.tr(),
-                          style: TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.black),
                         ),
                       ),
                     )
@@ -40,7 +40,7 @@ class SaveRecord {
                         children: [
                           Text(
                             LocaleKeys.fileTitle.tr(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                             ),
                           ),
@@ -275,7 +275,7 @@ class SaveRecord {
                         },
                         child: Text(
                           LocaleKeys.viewLibrary.tr(),
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ))
                   ],
                 ),

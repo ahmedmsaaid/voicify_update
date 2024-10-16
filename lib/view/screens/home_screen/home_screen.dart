@@ -1,14 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:voicify/core/api/dio_consumer.dart';
-import 'package:voicify/core/serveses/services_locator.dart';
-import 'package:voicify/core/translation/locate_keys.g.dart';
-import 'package:voicify/model/data/cubits/data_cubit/data_cubit.dart';
 import 'package:voicify/model/data/cubits/home_cubit/home_cubit.dart';
 import 'package:voicify/view/screens/home_screen/libiary/library.dart';
 import 'package:voicify/view/screens/home_screen/record//Record.dart';
@@ -24,10 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> screens = [
-      BlocProvider.value(
-        value: HomeCubit()..getList(),
-        child: Home(),
-      ),
+      Home(),
       Library(
           height: HomeCubit.get(context)
               .height(HomeCubit.get(context).savedItems.length)
@@ -44,7 +35,7 @@ class HomeScreen extends StatelessWidget {
           extendBodyBehindAppBar: true,
           extendBody: true,
           body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
                   Color(0xFF6a1b9a),
@@ -75,9 +66,9 @@ class HomeScreen extends StatelessWidget {
           ),
           bottomNavigationBar: CurvedNavigationBar(
             backgroundColor: Colors.transparent,
-            color: Color(0xFF6a1b9a),
+            color: const Color(0xFF6a1b9a),
             buttonBackgroundColor: AppColors.blue,
-            animationDuration: Duration(milliseconds: 300),
+            animationDuration: const Duration(milliseconds: 300),
             index: cubit.currentIndex,
             height: 60,
             onTap: (index) {
@@ -107,7 +98,7 @@ class HomeScreen extends StatelessWidget {
           color: isSelected ? Colors.white : Colors.grey[400],
           size: 24,
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         !isSelected
             ? Text(
                 label,
@@ -117,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
       ],
     );
   }

@@ -4,13 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:voicify/core/translation/locate_keys.g.dart';
-import 'package:voicify/model/data/cubits/api_cubit/api_cubit.dart';
 import 'package:voicify/model/data/cubits/data_cubit/data_cubit.dart';
 import 'package:voicify/model/data/cubits/home_cubit/home_cubit.dart';
 import 'package:voicify/view/widgets/save_record/save_record.dart';
-import 'package:voicify/viewmodel/models/colors/app_colors.dart';
 
-import '../../screens/home_screen/libiary/library.dart';
+import '../alert/alerts.dart';
 import '../snack_bar/snack_bar.dart';
 
 class DialogBox {
@@ -123,7 +121,7 @@ class DialogBox {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(12),
+                                      padding: const EdgeInsets.all(12),
                                       decoration: BoxDecoration(
                                         color: Colors.indigo,
                                         borderRadius: BorderRadius.circular(12),
@@ -150,13 +148,14 @@ class DialogBox {
                                               SaveRecord.done(context);
                                             });
                                           },
-                                          icon: Icon(Icons.save,
+                                          icon: const Icon(Icons.save,
                                               color: Colors.white)),
                                     ),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                     Text(
                                       LocaleKeys.save.tr(),
-                                      style: TextStyle(color: Colors.grey),
+                                      style:
+                                          const TextStyle(color: Colors.grey),
                                     ),
                                   ],
                                 ),
@@ -164,7 +163,7 @@ class DialogBox {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(12),
+                                      padding: const EdgeInsets.all(12),
                                       decoration: BoxDecoration(
                                         color: Colors.deepPurpleAccent,
                                         borderRadius: BorderRadius.circular(12),
@@ -174,13 +173,14 @@ class DialogBox {
                                           onPressed: () {
                                             cubit.editButton();
                                           },
-                                          icon: Icon(Icons.edit,
+                                          icon: const Icon(Icons.edit,
                                               color: Colors.white)),
                                     ),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                     Text(
                                       LocaleKeys.edit.tr(),
-                                      style: TextStyle(color: Colors.grey),
+                                      style:
+                                          const TextStyle(color: Colors.grey),
                                     ),
                                   ],
                                 ),
@@ -256,23 +256,24 @@ class DialogBox {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
                                 shape: BoxShape.rectangle,
-                                color: Color(0xFF6a1b9a),
+                                color: const Color(0xFF6a1b9a),
                               ),
                               child: IconButton(
                                   onPressed: () {
                                     cubit2.share(
                                         cubit.savedItems[index].content ?? '');
                                   },
-                                  icon: Icon(Icons.share, color: Colors.white)),
+                                  icon: const Icon(Icons.share,
+                                      color: Colors.white)),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
                               LocaleKeys.share.tr(),
-                              style: TextStyle(color: Colors.grey),
+                              style: const TextStyle(color: Colors.grey),
                             ),
                           ],
                         ),
@@ -280,39 +281,35 @@ class DialogBox {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: Color(0xFF03A9F4),
+                                color: const Color(0xFF03A9F4),
                                 borderRadius: BorderRadius.circular(12),
                                 shape: BoxShape.rectangle,
                               ),
                               child: IconButton(
-                                  onPressed: () {
-                                    cubit2
-                                        .download(
-                                            cubit.savedItems[index].content ??
-                                                '',
-                                            cubit.savedItems[index].title ?? '')
-                                        .then((_) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                              content:
-                                                  Text(cubit2.downloadPath)));
-                                    });
+                                  onPressed: () async {
+                                    await cubit2.download(
+                                        cubit.savedItems[index].content ?? '',
+                                        cubit.savedItems[index].title ?? '');
+                                    Alerts.showMassage(
+                                        context, cubit2.downloadPath);
+
+                                    ;
                                     Future.delayed(
-                                      Duration(seconds: 3),
+                                      const Duration(seconds: 3),
                                       () => Navigator.pop(context),
                                     ).then((_) {
                                       SaveRecord.done(context);
                                     });
                                   },
-                                  icon: Icon(Icons.download_outlined,
+                                  icon: const Icon(Icons.download_outlined,
                                       color: Colors.white)),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
                               LocaleKeys.download.tr(),
-                              style: TextStyle(color: Colors.grey),
+                              style: const TextStyle(color: Colors.grey),
                             ),
                           ],
                         ),
@@ -320,9 +317,9 @@ class DialogBox {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: Color(0xFF4CAF50),
+                                color: const Color(0xFF4CAF50),
                                 borderRadius: BorderRadius.circular(12),
                                 shape: BoxShape.rectangle,
                               ),
@@ -343,10 +340,11 @@ class DialogBox {
                                       );
                                     });
                                   },
-                                  icon: Icon(Icons.copy, color: Colors.white)),
+                                  icon: const Icon(Icons.copy,
+                                      color: Colors.white)),
                             ),
-                            SizedBox(height: 8),
-                            Text(
+                            const SizedBox(height: 8),
+                            const Text(
                               LocaleKeys.copy,
                               style: TextStyle(color: Colors.grey),
                             ),

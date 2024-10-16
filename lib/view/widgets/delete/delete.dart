@@ -108,7 +108,7 @@ class Alert {
                                         border: Border.all(color: Colors.grey)),
                                     child: Text(
                                       LocaleKeys.no.tr(),
-                                      style: TextStyle(color: Colors.white),
+                                      style: const TextStyle(color: Colors.white),
                                     ),
                                   )),
                               MaterialButton(
@@ -124,7 +124,7 @@ class Alert {
                                         border: Border.all(color: Colors.grey)),
                                     child: Text(
                                       LocaleKeys.yes.tr(),
-                                      style: TextStyle(color: Colors.white),
+                                      style: const TextStyle(color: Colors.white),
                                     ),
                                   )),
                             ],
@@ -187,7 +187,7 @@ class Alert {
                                   border: Border.all(color: Colors.grey)),
                               child: Text(
                                 LocaleKeys.no.tr(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             )),
                         MaterialButton(
@@ -203,7 +203,7 @@ class Alert {
                                   border: Border.all(color: Colors.grey)),
                               child: Text(
                                 LocaleKeys.yes.tr(),
-                                style: TextStyle(color: Colors.white),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             )),
                       ],

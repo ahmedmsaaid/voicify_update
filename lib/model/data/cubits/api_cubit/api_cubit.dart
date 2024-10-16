@@ -3,12 +3,13 @@ import 'dart:io';
 
 import 'package:dart_openai/dart_openai.dart';
 import 'package:dio/dio.dart';
-import 'package:ffmpeg_kit_flutter_audio/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter/ffmpeg_kit.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
+
 import 'package:voicify/core/api/api_consumer.dart';
 import 'package:voicify/core/api/end_points.dart';
 import 'package:voicify/viewmodel/models/api_model/transcribed.dart';
@@ -127,7 +128,7 @@ class ApiCubit extends Cubit<ApiState> {
     emit(LoadingConvertToMp3());
     try {
       String convertedPath = await _convertToMp3(file.path);
-      Future.delayed(Duration(seconds: 1));
+      Future.delayed(const Duration(seconds: 1));
       await _processAudioFile(File(convertedPath), p.basename(convertedPath));
       emit(SuccessConvertToMp3());
     } catch (e) {

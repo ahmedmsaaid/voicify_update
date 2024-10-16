@@ -1,6 +1,5 @@
 import 'package:dart_openai/dart_openai.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:voicify/core/serveses/services_locator.dart';
 import 'package:voicify/model/data/cache/cache_helper.dart';

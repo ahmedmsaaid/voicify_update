@@ -1,15 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/link.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:voicify/core/translation/locate_keys.g.dart';
 import 'package:voicify/model/data/cubits/data_cubit/data_cubit.dart';
-import 'package:voicify/model/data/cubits/home_cubit/home_cubit.dart';
 
-import '../snack_bar/snack_bar.dart';
 
 class AboutUs {
   static aboutUs(BuildContext context) {
@@ -45,7 +41,7 @@ class AboutUs {
                           uri: Uri.parse("https://ahmedmsaaaid.netlify.app"),
                           builder: (context, followLink) => TextButton(
                               onPressed: followLink,
-                              child: Row(
+                              child: const Row(
                                 children: [
                                   Text("About Developer "),
                                   Icon(Icons.open_in_new_outlined)

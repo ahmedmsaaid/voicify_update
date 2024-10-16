@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:voicify/model/data/cubits/home_cubit/home_cubit.dart';
 import 'package:voicify/view/screens/home_screen/home_screen.dart';
 
 import '../../../core/avatars/avatar_list.dart';
-import '../../../model/data/cubits/data_cubit/data_cubit.dart';
 
 class ChangeAvatar {
   static Future<void> change(
@@ -21,11 +20,11 @@ class ChangeAvatar {
           content: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
               var cubit = HomeCubit.get(context);
-              return Container(
+              return SizedBox(
                 height: 600,
                 width: 400,
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 10,
                   ),
@@ -39,7 +38,7 @@ class ChangeAvatar {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
+                                builder: (context) => const HomeScreen(),
                               ));
                         },
                         child: Padding(

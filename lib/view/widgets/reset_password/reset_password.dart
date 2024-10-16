@@ -23,7 +23,7 @@ class ResetPassword {
                   children: [
                     Text(
                       LocaleKeys.enterYourEmail.tr(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                       ),
                     ),

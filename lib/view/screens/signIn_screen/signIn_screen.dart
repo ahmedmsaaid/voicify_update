@@ -33,15 +33,15 @@ class SignInScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           body: Center(
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: BlocConsumer<AuthCubit, AuthState>(
-                listener: (context, state) {
+                listener: (context, state) async {
                   if (state is SuccessSignIn ||
                       state is SuccessSignUpWithGoogle) {
-                    Navigator.push(
+                    await Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HomeScreen(),
+                          builder: (context) => const HomeScreen(),
                         ));
                   } else if (state is FailedSignIn) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -70,28 +70,28 @@ class SignInScreen extends StatelessWidget {
                         Center(
                           child: Text(
                             LocaleKeys.signIn.tr(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                        SizedBox(height: 40),
+                        const SizedBox(height: 40),
                         TextField(
                           controller: cubit.email,
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.transparent,
                             hintText: LocaleKeys.email.tr(),
-                            border: UnderlineInputBorder(
+                            border: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: Colors.white), // للحد الصريح
                             ),
-                            prefixIcon: Icon(Icons.email),
+                            prefixIcon: const Icon(Icons.email),
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextField(
                           controller: cubit.password,
                           obscureText: true,
@@ -99,11 +99,11 @@ class SignInScreen extends StatelessWidget {
                             filled: true,
                             fillColor: Colors.transparent,
                             hintText: LocaleKeys.password.tr(),
-                            border: UnderlineInputBorder(
+                            border: const UnderlineInputBorder(
                               borderSide: BorderSide(
                                   color: Colors.white), // للحد الصريح
                             ),
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                           ),
                         ),
                         SizedBox(
@@ -139,45 +139,29 @@ class SignInScreen extends StatelessWidget {
                                 side:
                                     BorderSide(color: Colors.grey, width: 1.w),
                               ),
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 50, vertical: 15),
                               backgroundColor: AppColors.purple
                                   .withOpacity(.3), // Button color
                             ),
                             child: state is LoadingSignIn
-                                ? Center(
+                                ? const Center(
                                     child: CircularProgressIndicator.adaptive(),
                                   )
                                 : Text(
                                     LocaleKeys.signIn.tr(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 18, color: Colors.grey),
                                   ),
                           ),
                         ),
                         SizedBox(height: 10.h),
-                        Center(child: Text("OR")),
+                        const Center(child: Text("OR")),
                         SizedBox(height: 10.h),
                         Center(
                           child: ElevatedButton(
                             onPressed: () async {
-                              await cubit.signInWithGoogle().then((_) {
-                                if (state is SuccessSignUpWithGoogle) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => HomeScreen(),
-                                      ));
-                                } else {
-                                  if (state is FailedSignIn)
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(state.err),
-                                      ),
-                                    );
-                                }
-                              });
-                              // Handle login action
+                              await cubit.signInWithGoogle();
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -185,7 +169,7 @@ class SignInScreen extends StatelessWidget {
                                 side:
                                     BorderSide(color: Colors.grey, width: 1.w),
                               ),
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 50, vertical: 15),
                               backgroundColor: AppColors.purple
                                   .withOpacity(.3), // Button color
@@ -201,16 +185,16 @@ class SignInScreen extends StatelessWidget {
                                   ),
                                 ),
                                 state is LoadingSignUpWithGoogle
-                                    ? Center(
+                                    ? const Center(
                                         child: CircularProgressIndicator
                                             .adaptive(),
                                       )
                                     : Text(
                                         LocaleKeys.signInGoogle.tr(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 18, color: Colors.grey),
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 ),
                               ],
@@ -232,13 +216,15 @@ class SignInScreen extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => SignupScreen(),
+                                      builder: (context) =>
+                                          const SignupScreen(),
                                     ));
                                 // Handle register
                               },
                               child: Text(
                                 LocaleKeys.signUp.tr(),
-                                style: TextStyle(color: Colors.blueAccent),
+                                style:
+                                    const TextStyle(color: Colors.blueAccent),
                               ),
                             ),
                           ],

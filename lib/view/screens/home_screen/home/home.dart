@@ -12,7 +12,6 @@ import 'package:voicify/model/data/cubits/home_cubit/home_cubit.dart';
 import 'package:voicify/viewmodel/firebase/firebase.dart';
 import 'package:voicify/viewmodel/models/colors/app_colors.dart';
 
-import '../../../../core/serveses/services_locator.dart';
 import '../../../widgets/about_us/about_us.dart';
 import '../../on_boarding/on_boarding.dart';
 
@@ -44,7 +43,7 @@ class Home extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OnBoardingScreen(),
+                      builder: (context) => const OnBoardingScreen(),
                     ));
               }
             },
@@ -69,7 +68,7 @@ class Home extends StatelessWidget {
                       children: [
                         Text(
                           "${LocaleKeys.hi.tr()} ${SharedHelper.getData(FirebaseKeys.name)}",
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                         SizedBox(
                           height: 5.h,
@@ -110,7 +109,7 @@ class Home extends StatelessWidget {
                     ),
                   ],
                 ),
-                Descriptions(context),
+                descriptions(context),
                 SizedBox(
                   height: 20.h,
                 ),
@@ -133,7 +132,7 @@ Widget enDescriptions(String test) {
   );
 }
 
-Widget Descriptions(context) {
+Widget descriptions(context) {
   return HomeCubit.get(context).lang
       ? Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -191,18 +190,18 @@ Widget _circle() {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Icon(Icons.multitrack_audio_sharp,
-                      size: 25.r, color: Color(0xFF542FB8)),
+                      size: 25.r, color: const Color(0xFF542FB8)),
                   Icon(Icons.multitrack_audio_sharp,
-                      size: 25.r, color: Color(0xFF542FB8)),
+                      size: 25.r, color: const Color(0xFF542FB8)),
                   Icon(
                     Icons.multitrack_audio_sharp,
                     size: 30.r,
-                    color: Color(0xFF542FB8),
+                    color: const Color(0xFF542FB8),
                   ),
                   Icon(
                     Icons.multitrack_audio_sharp,
                     size: 25.r,
-                    color: Color(0xFF542FB8),
+                    color: const Color(0xFF542FB8),
                   ),
                 ],
               ),
@@ -267,17 +266,17 @@ Widget _container(context) {
           children: [
             Text(
               LocaleKeys.seeHowVoiceScribeWorks.tr(),
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
               ),
             ),
             HomeCubit.get(context).lang
-                ? Icon(
+                ? const Icon(
                     Icons.arrow_circle_left,
                     color: Colors.white,
                   )
-                : Icon(
+                : const Icon(
                     Icons.arrow_circle_right,
                     color: Colors.white,
                   )
@@ -312,7 +311,7 @@ Widget _popUoButton() {
               },
               child: Text(
                 LocaleKeys.settings.tr(),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
           ),
@@ -324,7 +323,7 @@ Widget _popUoButton() {
               },
               child: Text(
                 LocaleKeys.aboutUs.tr(),
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
           ),
@@ -336,8 +335,8 @@ Widget _popUoButton() {
               },
               child: Text(
                 LocaleKeys.signOut.tr(),
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           )
